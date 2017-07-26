@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">KWeatherApp</string>
+    <string name="temp_format">%d °C</string>
+    <string name="pressure_format">%d hPa</string>
 </resources>

@@ -20,7 +20,7 @@ class MainActivity : LifecycleActivity(), Observer<Address?> {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        locationRepository = LocationRepository(FusedLocationProviderClient(this), Geocoder(this))
+        locationRepository = LocationRepository(FusedLocationProviderClient(applicationContext), Geocoder(applicationContext))
     }
 
     override fun onResume() {
@@ -34,9 +34,9 @@ class MainActivity : LifecycleActivity(), Observer<Address?> {
         }
     }
 
-    override fun onStop() {
+    override fun onPause() {
         stopObservingLocation()
-        super.onStop()
+        super.onPause()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

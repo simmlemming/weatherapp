@@ -5,9 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.location.Address
-import android.location.Geocoder
 import android.location.Location
-import android.os.AsyncTask
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.PermissionChecker
@@ -38,11 +36,11 @@ fun Location?.toAddress(): Address? {
     return address
 }
 
-fun Location?.requestDetails(geocoder : Geocoder, callback: (Address?) -> Unit) {
-    let {
-        geocoder.getFromLocationAsync(this!!.latitude, longitude, callback)
-    }
-}
+//fun Location?.requestDetails(geocoder : Geocoder, callback: (Address?) -> Unit) {
+//    let {
+//        geocoder.getFromLocationAsync(this!!.latitude, longitude, callback)
+//    }
+//}
 
 fun Activity.hideStatusBar() {
     val decorView = window.decorView
@@ -55,15 +53,15 @@ fun FusedLocationProviderClient.requestLastKnownLocation(callback : (Location?) 
     lastLocation.addOnSuccessListener(callback)
 }
 
-fun Geocoder.getFromLocationAsync(lat: Double, lon: Double, callback: (Address?) -> Unit) {
-    object : AsyncTask<Pair<Double, Double>, Nothing, Address?>() {
-        override fun doInBackground(vararg coords: Pair<Double, Double>?): Address? {
-            val (lat, lon) = coords[0]!!
-            return getFromLocation(lat, lon, 1).firstOrNull()
-        }
-
-        override fun onPostExecute(result: Address?) {
-            callback.invoke(result)
-        }
-    }.execute(Pair(lat, lon))
-}
+//fun Geocoder.getFromLocationAsync(lat: Double, lon: Double, callback: (Address?) -> Unit) {
+//    object : AsyncTask<Pair<Double, Double>, Nothing, Address?>() {
+//        override fun doInBackground(vararg coords: Pair<Double, Double>?): Address? {
+//            val (lat, lon) = coords[0]!!
+//            return getFromLocation(lat, lon, 1).firstOrNull()
+//        }
+//
+//        override fun onPostExecute(result: Address?) {
+//            callback.invoke(result)
+//        }
+//    }.execute(Pair(lat, lon))
+//}

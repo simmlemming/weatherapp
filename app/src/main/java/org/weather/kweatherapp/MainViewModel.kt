@@ -4,57 +4,60 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.location.Location
 import android.util.Log
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.ScheduledFuture
+import java.util.concurrent.ScheduledThreadPoolExecutor
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by mtkachenko on 29/07/17.
  */
 class MainViewModel(app: Application) : AndroidViewModel(app) {
-    val locationRepository = (app as WeatherApplication).locationRepository
-    val weatherApi = (app as WeatherApplication).weatherApi
+    private companion object {
+        const val UPDATE_INTERVAL_MIN : Long = 10
+    }
+    
+    private val locationRepository = (app as WeatherApplication).locationRepository
+    private val weatherApi = (app as WeatherApplication).weatherApi
 
     var currentWeather = WeatherLiveData() as LiveData<WeatherInfo?>
 
-    private inner class WeatherLiveData : MutableLiveData<WeatherInfo?>(), retrofit2.Callback<WeatherInfo> {
+    private inner class WeatherLiveData : MutableLiveData<WeatherInfo?>(), retrofit2.Callback<WeatherResponse>, Runnable {
+        val executor = ScheduledThreadPoolExecutor(1)
+        private var futureWeatherRequest: ScheduledFuture<*>? = null
+
         override fun onActive() {
+            Log.i("W", "onActive()")
+            futureWeatherRequest = executor.scheduleAtFixedRate(this, 0, UPDATE_INTERVAL_MIN, TimeUnit.MINUTES)
+        }
+
+        override fun run() {
             locationRepository.getCurrentLocation { location ->
                 if (location == null) {
                     value = null
                 } else {
-                    requestWeather(location)
+                    weatherApi
+                            .requestWeather(location.latitude, location.longitude)
+                            .enqueue(this)
                 }
             }
         }
 
-        private fun requestWeather(location: Location) {
-            Log.i("W", "Requested weather for $location")
-            val call = weatherApi.requestWeather(location.latitude, location.longitude)
-            call.enqueue(object : Callback<WeatherResponse> {
-                override fun onFailure(c: Call<WeatherResponse>?, t: Throwable?) {
-                    Log.e("W", "Cannot retrieve current weather", t)
-                }
-
-                override fun onResponse(c: Call<WeatherResponse>?, response: Response<WeatherResponse>?) {
-                    Log.i("W", "Current weather + ${response?.body()}")
-                    value = response?.body()?.toWeatherInfo()
-                }
-            })
-        }
-
-        override fun onFailure(call: Call<WeatherInfo>?, t: Throwable?) {
+        override fun onFailure(c: Call<WeatherResponse>?, t: Throwable?) {
             Log.e("W", "Cannot retrieve current weather", t)
         }
 
-        override fun onResponse(call: Call<WeatherInfo>?, response: Response<WeatherInfo>?) {
-            Log.i("W", "Current weather + ${response?.body()}")
+        override fun onResponse(c: Call<WeatherResponse>?, response: Response<WeatherResponse>?) {
+            Log.i("W", "${response?.body()}")
+            value = response?.body()?.toWeatherInfo()
         }
 
         override fun onInactive() {
-
+            futureWeatherRequest?.cancel(true)
+            futureWeatherRequest = null
+            executor.purge()
         }
     }
 }

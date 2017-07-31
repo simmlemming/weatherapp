@@ -26,6 +26,6 @@ class WeatherWidget(context: Context, attributeSet: AttributeSet) : FrameLayout(
     }
 
     fun setHumidity(humidity: Int) {
-        humidityView.text = resources.getString(R.string.pressure_format, humidity)
+        humidityView.text = "$humidity %"
     }
 }

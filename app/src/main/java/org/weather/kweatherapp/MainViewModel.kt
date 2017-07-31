@@ -18,7 +18,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     private companion object {
         const val UPDATE_INTERVAL_MIN : Long = 10
     }
-    
+
     private val locationRepository = (app as WeatherApplication).locationRepository
     private val weatherApi = (app as WeatherApplication).weatherApi
 

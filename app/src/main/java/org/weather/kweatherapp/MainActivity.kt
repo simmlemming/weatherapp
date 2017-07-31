@@ -5,7 +5,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.current_weather as currentWeatherView
-import kotlinx.android.synthetic.main.activity_main.location as locationView
 
 class MainActivity : LifecycleActivity(), Observer<WeatherInfo?> {
     companion object {
@@ -44,9 +43,9 @@ class MainActivity : LifecycleActivity(), Observer<WeatherInfo?> {
     }
 
     override fun onChanged(weather: WeatherInfo?) {
-        locationView.text = weather?.name ?: "-"
         currentWeatherView.setTemperature(weather?.temp ?: 0)
         currentWeatherView.setPressure(weather?.pressure ?: 0)
+        currentWeatherView.setHumidity(weather?.humidity ?: 0)
     }
 
     private fun startObservingWeather() {

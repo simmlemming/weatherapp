@@ -16,6 +16,7 @@ class MainActivity : LifecycleActivity(), Observer<WeatherInfo?> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        keepScreenOn()
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
     }

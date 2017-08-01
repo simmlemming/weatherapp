@@ -10,6 +10,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.PermissionChecker
 import android.view.View
+import android.view.WindowManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import java.util.*
 
@@ -46,6 +47,10 @@ fun Activity.hideStatusBar() {
     val decorView = window.decorView
     val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
     decorView.systemUiVisibility = uiOptions
+}
+
+fun Activity.keepScreenOn() {
+    window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 }
 
 @SuppressLint("MissingPermission")

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.weather_widget.view.humidity as humidityView
+import kotlinx.android.synthetic.main.weather_widget.view.icon as iconView
 import kotlinx.android.synthetic.main.weather_widget.view.pressure as pressureView
 import kotlinx.android.synthetic.main.weather_widget.view.temp as tempView
 
@@ -27,5 +28,10 @@ class WeatherWidget(context: Context, attributeSet: AttributeSet) : FrameLayout(
 
     fun setHumidity(humidity: Int) {
         humidityView.text = "$humidity %"
+    }
+
+    fun setIcon(id : String) {
+        val icon = resources.getIdentifier("ic_w$id", "drawable", context.getPackageName())
+        iconView.setImageResource(icon)
     }
 }

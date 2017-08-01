@@ -50,7 +50,6 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         }
 
         override fun onResponse(c: Call<WeatherResponse>?, response: Response<WeatherResponse>?) {
-            Log.i("W", "${response?.body()}")
             value = response?.body()?.toWeatherInfo()
         }
 

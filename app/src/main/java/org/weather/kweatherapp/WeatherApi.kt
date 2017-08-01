@@ -15,25 +15,23 @@ interface WeatherApi {
 class WeatherResponse {
     var name: String = "-"
     var main: Main? = null
+    var weather : List<Weather>? = null
 
     class Main {
         var temp: Double = 0.0
         var pressure: Int = 0
         var humidity: Int = 0
+    }
 
-        override fun toString(): String {
-            return "Main(temp=$temp, pressure=$pressure, humidity=$humidity)"
-        }
+    class Weather {
+        var icon : String? = null
     }
 
     fun toWeatherInfo(): WeatherInfo {
         return WeatherInfo(name,
                 main?.temp?.toInt() ?: 0,
                 main?.humidity ?: 0,
-                main?.pressure ?: 0)
-    }
-
-    override fun toString(): String {
-        return "WeatherResponse(name='$name', main=$main)"
+                main?.pressure ?: 0,
+                weather?.firstOrNull()?.icon ?: "")
     }
 }

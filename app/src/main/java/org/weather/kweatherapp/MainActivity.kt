@@ -47,6 +47,7 @@ class MainActivity : LifecycleActivity(), Observer<WeatherInfo?> {
         currentWeatherView.setTemperature(weather?.temp ?: 0)
         currentWeatherView.setPressure(weather?.pressure ?: 0)
         currentWeatherView.setHumidity(weather?.humidity ?: 0)
+        currentWeatherView.setIcon(weather?.icon ?: "")
     }
 
     private fun startObservingWeather() {

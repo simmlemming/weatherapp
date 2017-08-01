@@ -44,7 +44,7 @@ fun Location?.toAddress(): Address? {
 
 fun Activity.hideStatusBar() {
     val decorView = window.decorView
-    val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN
+    val uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
     decorView.systemUiVisibility = uiOptions
 }
 

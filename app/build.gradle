@@ -21,6 +21,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "location"
+
+    productFlavors {
+        mocked {
+            dimension "location"
+        }
+
+        real {
+            dimension "location"
+        }
+    }
 }
 
 dependencies {

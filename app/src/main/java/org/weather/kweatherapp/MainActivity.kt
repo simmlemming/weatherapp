@@ -4,6 +4,7 @@ import android.arch.lifecycle.LifecycleActivity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import org.weather.kweatherapp.weather.WeatherInfo
 import kotlinx.android.synthetic.main.activity_main.current_weather as currentWeatherView
 
 class MainActivity : LifecycleActivity(), Observer<WeatherInfo?> {

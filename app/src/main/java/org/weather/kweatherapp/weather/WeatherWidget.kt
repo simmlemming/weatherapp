@@ -1,8 +1,9 @@
-package org.weather.kweatherapp
+package org.weather.kweatherapp.weather
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import org.weather.kweatherapp.R
 import kotlinx.android.synthetic.main.weather_widget.view.humidity as humidityView
 import kotlinx.android.synthetic.main.weather_widget.view.icon as iconView
 import kotlinx.android.synthetic.main.weather_widget.view.pressure as pressureView

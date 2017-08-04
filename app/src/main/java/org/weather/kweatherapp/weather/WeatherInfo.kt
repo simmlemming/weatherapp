@@ -1,4 +1,4 @@
-package org.weather.kweatherapp
+package org.weather.kweatherapp.weather
 
 /**
  * Created by mtkachenko on 26/07/17.

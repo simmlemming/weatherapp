@@ -7,7 +7,7 @@
     android:background="@color/background"
     tools:context="org.weather.kweatherapp.MainActivity">
 
-    <org.weather.kweatherapp.WeatherWidget
+    <org.weather.kweatherapp.weather.WeatherWidget
         android:id="@+id/current_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

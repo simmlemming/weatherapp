@@ -1,4 +1,4 @@
-package org.weather.kweatherapp
+package org.weather.kweatherapp.location
 
 import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient

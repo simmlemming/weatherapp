@@ -2,6 +2,7 @@ package org.weather.kweatherapp
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.weather.kweatherapp.weather.IconMapper
 
 /**
  * Example local unit test, which will execute on the development machine (host).

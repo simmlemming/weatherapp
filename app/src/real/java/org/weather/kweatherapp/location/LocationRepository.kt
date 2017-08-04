@@ -1,7 +1,8 @@
-package org.weather.kweatherapp
+package org.weather.kweatherapp.location
 
 import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient
+import org.weather.kweatherapp.requestLastKnownLocation
 
 /**
  * Created by mtkachenko on 26/07/17.

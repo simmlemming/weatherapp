@@ -4,4 +4,5 @@
     <dimen name="icon_size">120dp</dimen>
     <dimen name="text_size_big">120sp</dimen>
     <dimen name="text_size_normal">75sp</dimen>
+    <dimen name="text_size_small">32sp</dimen>
 </resources>

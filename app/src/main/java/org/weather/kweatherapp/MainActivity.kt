@@ -4,17 +4,17 @@ import android.arch.lifecycle.LifecycleActivity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
 import org.weather.kweatherapp.forecast.WeatherForecast
 import org.weather.kweatherapp.weather.Weather
 import kotlinx.android.synthetic.main.activity_main.current_weather as currentWeatherView
+import kotlinx.android.synthetic.main.activity_main.weather_forecast as weatherForecastView
 
 class MainActivity : LifecycleActivity() {
     companion object {
         const val PERMISSION_REQUEST_CODE = 1
     }
 
-    private lateinit var viewModel : MainViewModel
+    private lateinit var viewModel: MainViewModel
 
     private var weatherForecastObserver = Observer<WeatherForecast?> { forecast ->
         onNewWeatherForecast(forecast)
@@ -62,7 +62,7 @@ class MainActivity : LifecycleActivity() {
     }
 
     private fun onNewWeatherForecast(forecast: WeatherForecast?) {
-        Log.i("W", forecast.toString())
+        weatherForecastView.setWeatherForecast(forecast ?: WeatherForecast.EMPTY)
     }
 
     private fun startObserving() {

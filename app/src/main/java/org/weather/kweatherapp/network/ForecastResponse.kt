@@ -13,6 +13,7 @@ class ForecastResponse {
 
         fun toWeather(): Weather {
             return Weather("-",
+                    weather?.firstOrNull()?.id ?: -1,
                     dt.toCalendar(),
                     main?.temp?.toInt() ?: 0,
                     main?.humidity?.toInt() ?: 0,

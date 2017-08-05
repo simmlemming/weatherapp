@@ -17,10 +17,12 @@ class WeatherResponse {
 
     class WeatherPart {
         var icon: String? = null
+        var id : Int = -1
     }
 
     fun toWeather(): Weather {
         return Weather(name,
+                weather?.firstOrNull()?.id ?: -1,
                 dt.toCalendar(),
                 main?.temp?.toInt() ?: 0,
                 main?.humidity?.toInt() ?: 0,

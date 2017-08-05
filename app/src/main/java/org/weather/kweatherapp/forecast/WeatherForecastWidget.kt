@@ -9,14 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import org.weather.kweatherapp.R
+import org.weather.kweatherapp.relativeHours
 import org.weather.kweatherapp.weather.Weather
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by mtkachenko on 04/08/17.
  */
-class WeatherForecastWidget(context: Context, attributeSet: AttributeSet?) : RecyclerView(context, attributeSet) {
+class WeatherForecastWidget(context: Context, attributeSet: AttributeSet?) : RecyclerView(context, attributeSet), WeatherForecastView {
     private var lastForecast = WeatherForecast.EMPTY
 
     override fun onFinishInflate() {
@@ -25,7 +25,7 @@ class WeatherForecastWidget(context: Context, attributeSet: AttributeSet?) : Rec
         adapter = WeatherForecastAdapter()
     }
 
-    fun setWeatherForecast(forecast: WeatherForecast) {
+    override fun setWeatherForecast(forecast: WeatherForecast) {
         lastForecast = forecast
         adapter.notifyDataSetChanged()
     }
@@ -59,11 +59,3 @@ class WeatherForecastWidget(context: Context, attributeSet: AttributeSet?) : Rec
     }
 }
 
-fun Calendar?.relativeHours(other : Calendar) : Int {
-    if (this == null) {
-        return 0
-    }
-
-    val differenceMs = timeInMillis - other.timeInMillis
-    return TimeUnit.HOURS.convert(differenceMs, TimeUnit.MILLISECONDS).toInt()
-}

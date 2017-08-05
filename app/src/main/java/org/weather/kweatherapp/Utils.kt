@@ -13,6 +13,7 @@ import android.view.View
 import android.view.WindowManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 fun MainActivity.locationPermissionIsGranted() : Boolean {
     return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PermissionChecker.PERMISSION_GRANTED
@@ -70,3 +71,11 @@ fun FusedLocationProviderClient.requestLastKnownLocation(callback : (Location?) 
 //        }
 //    }.execute(Pair(lat, lon))
 //}
+fun Calendar?.relativeHours(other : Calendar) : Int {
+    if (this == null) {
+        return 0
+    }
+
+    val differenceMs = timeInMillis - other.timeInMillis
+    return TimeUnit.HOURS.convert(differenceMs, TimeUnit.MILLISECONDS).toInt()
+}

@@ -7,6 +7,11 @@
     android:background="@color/background"
     tools:context="org.weather.kweatherapp.MainActivity">
 
+    <org.weather.kweatherapp.forecast.WeatherForecastBackground
+        android:id="@+id/weather_forecast"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <org.weather.kweatherapp.weather.WeatherWidget
         android:id="@+id/current_weather"
         android:layout_width="wrap_content"
@@ -14,8 +19,8 @@
         android:layout_centerInParent="true" />
 
     <org.weather.kweatherapp.forecast.WeatherForecastWidget
-        android:id="@+id/weather_forecast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
 </RelativeLayout>

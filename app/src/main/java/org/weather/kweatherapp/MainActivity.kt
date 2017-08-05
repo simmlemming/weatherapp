@@ -5,14 +5,19 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import org.weather.kweatherapp.forecast.WeatherForecast
+import org.weather.kweatherapp.forecast.WeatherForecastBackground
+import org.weather.kweatherapp.forecast.WeatherForecastView
 import org.weather.kweatherapp.weather.Weather
-import kotlinx.android.synthetic.main.activity_main.current_weather as currentWeatherView
-import kotlinx.android.synthetic.main.activity_main.weather_forecast as weatherForecastView
+import org.weather.kweatherapp.weather.WeatherView
+import org.weather.kweatherapp.weather.WeatherWidget
 
 class MainActivity : LifecycleActivity() {
     companion object {
         const val PERMISSION_REQUEST_CODE = 1
     }
+
+    private lateinit var weatherForecastView: WeatherForecastView
+    private lateinit var currentWeatherView : WeatherView
 
     private lateinit var viewModel: MainViewModel
 
@@ -28,6 +33,9 @@ class MainActivity : LifecycleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         keepScreenOn()
+
+        currentWeatherView = findViewById<WeatherWidget>(R.id.current_weather)
+        weatherForecastView = findViewById<WeatherForecastBackground>(R.id.weather_forecast)
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
     }
@@ -55,10 +63,7 @@ class MainActivity : LifecycleActivity() {
     }
 
     private fun onNewCurrentWeather(weather: Weather?) {
-        currentWeatherView.setTemperature(weather?.temp ?: 0)
-        currentWeatherView.setPressure(weather?.pressure ?: 0)
-        currentWeatherView.setHumidity(weather?.humidity ?: 0)
-        currentWeatherView.setIcon(weather?.icon ?: "")
+        currentWeatherView.setWeather(weather ?: Weather.EMPTY)
     }
 
     private fun onNewWeatherForecast(forecast: WeatherForecast?) {

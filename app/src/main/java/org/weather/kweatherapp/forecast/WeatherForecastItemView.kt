@@ -19,8 +19,8 @@ open class WeatherForecastItemView(context: Context, attrs: AttributeSet) : Fram
         val DATE_FORMAT = SimpleDateFormat("HH:mm", Locale.getDefault())
     }
 
-    protected lateinit var dateView : TextView
-    protected lateinit var timeMarkerViewBlock : View
+    protected lateinit var dateView: TextView
+    protected lateinit var timeMarkerViewBlock: View
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -31,14 +31,30 @@ open class WeatherForecastItemView(context: Context, attrs: AttributeSet) : Fram
     }
 
     override fun setWeather(weather: Weather) {
-//        dateView.setBackgroundColor(getWeatherColor(weather.id))
+        setBackgroundColor(weather.id.toWeatherColor(context))
         dateView.text = DATE_FORMAT.format(weather.date?.time)
 //        val minutes = weather.date.between(Calendar.getInstance(), TimeUnit.MINUTES)
 //        dateView.text = "+${minutes.toHumanReadableTime()}"
     }
 }
 
-private fun Int.toHumanReadableTime() : String {
+private fun Int.toWeatherColor(context: Context): Int {
+    val colorResId = when (this) {
+        in 200..299 -> R.color.weather_thunder
+        in 300..399 -> R.color.weather_drizzle
+        in 500..599 -> R.color.weather_rain
+        in 600..699 -> R.color.weather_snow
+        in 700..799 -> R.color.weather_fog
+        in 800..800 -> R.color.weather_clear
+        in 801..809 -> R.color.weather_clouds
+        in 900..999 -> R.color.weather_extreme
+        else -> R.color.weather_unknown
+    }
+
+    return context.resources.getColor(colorResId)
+}
+
+private fun Int.toHumanReadableTime(): String {
     val hours = this / 60
     val minutes = this % 60
     return String.format("%02d:%02d", hours, minutes)

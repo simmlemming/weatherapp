@@ -5,8 +5,11 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import org.weather.kweatherapp.R
 import org.weather.kweatherapp.weather.WeatherView
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by mtkachenko on 05/08/17.
@@ -27,6 +30,23 @@ class WeatherForecastBackground(context: Context, attrs: AttributeSet) : FrameLa
     override fun setWeatherForecast(forecast: WeatherForecast) {
         weatherViews.forEachIndexed { index, weatherView ->
             weatherView.setWeather(forecast.weather[index])
+            (weatherView as View).setWeight(forecast.durationMin(index))
         }
     }
+}
+
+fun View.setWeight(weight: Int) {
+    (layoutParams as LinearLayout.LayoutParams).weight = weight + 0f
+    layoutParams = layoutParams
+}
+
+fun WeatherForecast.durationMin(index: Int): Int {
+    val prevMs = if (index == 0) {
+        Calendar.getInstance().timeInMillis
+    } else {
+        weather[index - 1].date?.timeInMillis ?: 0
+    }
+
+    val thisMs = weather[index].date?.timeInMillis ?: 0
+    return TimeUnit.MINUTES.convert(thisMs - prevMs, TimeUnit.MILLISECONDS).toInt()
 }

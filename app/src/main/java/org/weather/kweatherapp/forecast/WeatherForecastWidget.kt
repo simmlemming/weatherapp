@@ -9,9 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import org.weather.kweatherapp.R
-import org.weather.kweatherapp.relativeHours
+import org.weather.kweatherapp.between
 import org.weather.kweatherapp.weather.Weather
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by mtkachenko on 04/08/17.
@@ -53,7 +54,7 @@ class WeatherForecastWidget(context: Context, attributeSet: AttributeSet?) : Rec
 
         fun setWeather(weather : Weather) {
             tempView.text = context.getString(R.string.temp_format, weather.temp)
-            val hours = weather.date.relativeHours(Calendar.getInstance())
+            val hours = weather.date.between(Calendar.getInstance(), TimeUnit.HOURS)
             dateView.text = "+${hours}h"
         }
     }

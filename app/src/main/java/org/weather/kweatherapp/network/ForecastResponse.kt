@@ -23,9 +23,7 @@ class ForecastResponse {
     }
 
     fun toWeatherForecast(): WeatherForecast {
-        val weather = list
-                ?.filterIndexed { index, _ -> index > 0 } // first forecast is (kind of) current weather
-                ?.map { it.toWeather() } ?: listOf<Weather>()
+        val weather = list?.map { it.toWeather() } ?: listOf<Weather>()
         return WeatherForecast(weather)
     }
 }

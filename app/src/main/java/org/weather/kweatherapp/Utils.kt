@@ -71,11 +71,11 @@ fun FusedLocationProviderClient.requestLastKnownLocation(callback : (Location?) 
 //        }
 //    }.execute(Pair(lat, lon))
 //}
-fun Calendar?.relativeHours(other : Calendar) : Int {
+fun Calendar?.between(other : Calendar, timeUnit: TimeUnit) : Int {
     if (this == null) {
         return 0
     }
 
     val differenceMs = timeInMillis - other.timeInMillis
-    return TimeUnit.HOURS.convert(differenceMs, TimeUnit.MILLISECONDS).toInt()
+    return timeUnit.convert(differenceMs, TimeUnit.MILLISECONDS).toInt()
 }

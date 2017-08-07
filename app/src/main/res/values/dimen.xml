@@ -4,4 +4,5 @@
     <dimen name="text_size_big">96sp</dimen>
     <dimen name="text_size_normal">56sp</dimen>
     <dimen name="text_size_small">24sp</dimen>
+    <dimen name="time_marker_width">2dp</dimen>
 </resources>

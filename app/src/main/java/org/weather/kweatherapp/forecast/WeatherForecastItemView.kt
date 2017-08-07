@@ -32,9 +32,9 @@ open class WeatherForecastItemView(context: Context, attrs: AttributeSet) : Fram
 
     override fun setWeather(weather: Weather) {
         setBackgroundColor(weather.id.toWeatherColor(context))
-        dateView.text = DATE_FORMAT.format(weather.date?.time)
-//        val minutes = weather.date.between(Calendar.getInstance(), TimeUnit.MINUTES)
-//        dateView.text = "+${minutes.toHumanReadableTime()}"
+        val date = DATE_FORMAT.format(weather.date?.time)
+//        dateView.text = "[${weather.id}] $date"
+        dateView.text = "$date"
     }
 }
 
@@ -45,8 +45,9 @@ private fun Int.toWeatherColor(context: Context): Int {
         in 500..599 -> R.color.weather_rain
         in 600..699 -> R.color.weather_snow
         in 700..799 -> R.color.weather_fog
-        in 800..800 -> R.color.weather_clear
-        in 801..809 -> R.color.weather_clouds
+        800 -> R.color.weather_clear
+        in 801..802 -> R.color.weather_few_clouds
+        in 803..809 -> R.color.weather_clouds
         in 900..999 -> R.color.weather_extreme
         else -> R.color.weather_unknown
     }

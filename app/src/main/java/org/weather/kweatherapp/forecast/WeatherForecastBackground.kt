@@ -30,7 +30,8 @@ class WeatherForecastBackground(context: Context, attrs: AttributeSet) : FrameLa
     override fun setWeatherForecast(forecast: WeatherForecast) {
         weatherViews.forEachIndexed { index, weatherView ->
             weatherView.setWeather(forecast.weather[index])
-            (weatherView as View).setWeight(forecast.durationMin(index))
+            val duration = forecast.durationMin(index)
+            (weatherView as View).setWeight(duration)
         }
     }
 }

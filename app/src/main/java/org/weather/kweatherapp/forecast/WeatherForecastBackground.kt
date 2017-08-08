@@ -36,7 +36,7 @@ class WeatherForecastBackground(context: Context, attrs: AttributeSet) : FrameLa
     }
 }
 
-fun View.setWeight(weight: Int) {
+private fun View.setWeight(weight: Int) {
     (layoutParams as LinearLayout.LayoutParams).weight = weight + 0f
     layoutParams = layoutParams
 }

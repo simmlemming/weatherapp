@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="s">96dp</dimen>
-    <dimen name="icon_size">120dp</dimen>
-    <dimen name="text_size_big">120sp</dimen>
-    <dimen name="text_size_normal">75sp</dimen>
-    <dimen name="text_size_small">32sp</dimen>
-    <dimen name="time_marker_width">4dp</dimen>
+    <dimen name="icon_size">180dp</dimen>
+    <dimen name="text_size_big">180sp</dimen>
+    <dimen name="text_size_normal">90sp</dimen>
+    <dimen name="text_size_small">36sp</dimen>
+    <dimen name="time_marker_width">6dp</dimen>
 </resources>

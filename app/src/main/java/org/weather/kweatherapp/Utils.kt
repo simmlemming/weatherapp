@@ -9,11 +9,36 @@ import android.location.Location
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.PermissionChecker
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.google.android.gms.location.FusedLocationProviderClient
+import kotlinx.coroutines.*
+import retrofit2.Call
+import retrofit2.Response
+import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.coroutines.CoroutineContext
+
+
+suspend fun <T> Call<T>.retryUntilSuccess(times: Int = 3, delayMs: Long = 1000): Response<T>? {
+    var timesLeft = times
+
+    while (timesLeft > 0) {
+        try {
+            val response = GlobalScope.async(Dispatchers.IO) { clone().execute() }.await()
+            return response.checkSuccessful()
+        } catch (e: IOException) {
+            delay(delayMs)
+            timesLeft--
+        }
+    }
+
+    return null
+}
+
+private fun <T> Response<T>?.checkSuccessful(): Response<T> = if (this?.isSuccessful == true) this else throw IOException("Not successful")
 
 fun MainActivity.locationPermissionIsGranted() : Boolean {
     return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PermissionChecker.PERMISSION_GRANTED
@@ -78,4 +103,10 @@ fun Calendar?.between(other : Calendar, timeUnit: TimeUnit) : Int {
 
     val differenceMs = timeInMillis - other.timeInMillis
     return timeUnit.convert(differenceMs, TimeUnit.MILLISECONDS).toInt()
+}
+
+fun log(message: String, ctx: CoroutineContext? = null) {
+    Log.i("W", message)
+    Log.i("W", "    thread = ${Thread.currentThread().name}")
+    Log.i("W", "    ctx = $ctx")
 }

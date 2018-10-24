@@ -28,12 +28,18 @@ class WeatherForecastBackground(context: Context, attrs: AttributeSet) : FrameLa
     }
 
     override fun setWeatherForecast(forecast: WeatherForecast) {
+        if (!forecast.isValid()) {
+            return
+        }
+
         weatherViews.forEachIndexed { index, weatherView ->
             weatherView.setWeather(forecast.weather[index])
             val duration = forecast.durationMin(index)
             (weatherView as View).setWeight(duration)
         }
     }
+
+    private fun WeatherForecast.isValid() = weather.size >= weatherViews.size
 }
 
 private fun View.setWeight(weight: Int) {

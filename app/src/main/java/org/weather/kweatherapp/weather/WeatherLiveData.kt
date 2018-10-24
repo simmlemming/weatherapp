@@ -7,7 +7,7 @@ import org.weather.kweatherapp.location.LocationRepository
 import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
-abstract class WeatherLiveData<T>(val locationRepository: LocationRepository, executor: ScheduledThreadPoolExecutor) : ScheduledLiveData<T>(executor) {
+abstract class WeatherLiveData<T>(private val locationRepository: LocationRepository, executor: ScheduledThreadPoolExecutor) : ScheduledLiveData<T>(executor) {
     override val interval = MainViewModel.UPDATE_INTERVAL_SEC
     override val timeUnit = TimeUnit.SECONDS
 

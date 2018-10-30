@@ -17,7 +17,7 @@ class MainActivity : LifecycleActivity() {
     }
 
     private lateinit var weatherForecastView: WeatherForecastView
-    private lateinit var currentWeatherView : WeatherView
+    private lateinit var currentWeatherView: WeatherView
 
     private lateinit var viewModel: MainViewModel
 

@@ -12,13 +12,16 @@ import org.weather.kweatherapp.forecast.WeatherForecast
 import org.weather.kweatherapp.weather.Weather
 import org.weather.kweatherapp.weather.WeatherLiveData
 import java.util.concurrent.ScheduledThreadPoolExecutor
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by mtkachenko on 29/07/17.
  */
-class MainViewModel(app: Application) : AndroidViewModel(app) {
+class MainViewModel(app: Application) : AndroidViewModel(app), CoroutineScope {
     private val job = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + job)
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     companion object {
         const val UPDATE_INTERVAL_SEC: Long = 10 * 60
@@ -33,22 +36,22 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     private inner class ForecastLiveData : WeatherLiveData<WeatherForecast?>(locationRepository, executor) {
         override fun update(location: Location) {
-            uiScope.launch {
-                value = weatherRepository.getWeatherForecast(location)
+            launch {
+                value = weatherRepository.getWeatherForecast(location).await()
             }
         }
     }
 
     private inner class CurrentWeatherLiveData : WeatherLiveData<Weather?>(locationRepository, executor) {
         override fun update(location: Location) {
-            uiScope.launch {
+            launch {
                 value = weatherRepository.getWeather(location)
             }
         }
     }
 
     override fun onCleared() {
-        super.onCleared()
         job.cancel()
+        super.onCleared()
     }
 }

@@ -13,7 +13,9 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import com.google.android.gms.location.FusedLocationProviderClient
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
 import java.io.IOException
@@ -27,7 +29,7 @@ suspend fun <T> Call<T>.retryUntilSuccess(times: Int = 3, delayMs: Long = 1000):
 
     while (timesLeft > 0) {
         try {
-            val response = GlobalScope.async(Dispatchers.IO) { clone().execute() }.await()
+            val response = withContext(Dispatchers.IO) { clone().execute() }
             return response.checkSuccessful()
         } catch (e: IOException) {
             delay(delayMs)
@@ -40,7 +42,7 @@ suspend fun <T> Call<T>.retryUntilSuccess(times: Int = 3, delayMs: Long = 1000):
 
 private fun <T> Response<T>?.checkSuccessful(): Response<T> = if (this?.isSuccessful == true) this else throw IOException("Not successful")
 
-fun MainActivity.locationPermissionIsGranted() : Boolean {
+fun MainActivity.locationPermissionIsGranted(): Boolean {
     return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PermissionChecker.PERMISSION_GRANTED
 }
 
@@ -52,6 +54,7 @@ fun MainActivity.locationPermissionIsGrantedOnRuntime(requestCode: Int, grantRes
     return requestCode == MainActivity.PERMISSION_REQUEST_CODE && grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED
 
 }
+
 fun Location?.toAddress(): Address? {
     if (this == null) {
         return null
@@ -80,7 +83,7 @@ fun Activity.keepScreenOn() {
 }
 
 @SuppressLint("MissingPermission")
-fun FusedLocationProviderClient.requestLastKnownLocation(callback : (Location?) -> Unit) {
+fun FusedLocationProviderClient.requestLastKnownLocation(callback: (Location?) -> Unit) {
     lastLocation.addOnSuccessListener(callback)
 }
 
@@ -96,7 +99,7 @@ fun FusedLocationProviderClient.requestLastKnownLocation(callback : (Location?) 
 //        }
 //    }.execute(Pair(lat, lon))
 //}
-fun Calendar?.between(other : Calendar, timeUnit: TimeUnit) : Int {
+fun Calendar?.between(other: Calendar, timeUnit: TimeUnit): Int {
     if (this == null) {
         return 0
     }

@@ -7,7 +7,6 @@ import android.location.Location
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.android.Main
 import kotlinx.coroutines.launch
 import org.weather.kweatherapp.forecast.WeatherForecast
 import org.weather.kweatherapp.weather.Weather
